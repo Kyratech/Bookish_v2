@@ -1,8 +1,8 @@
-﻿@using Bookish_V2.DataAccess
-@using Bookish_V2.Web.Models
+﻿@using Bookish_V2.Web.Models;
+@using Bookish_V2.DataAccessFmwk;
 @model Bookish_V2.Web.Models.LibraryCatalogueViewModel
 @{
-    ViewBag.Title = "Home Page";
+	ViewBag.Title = "Home Page";
 }
 
 <html>
@@ -10,18 +10,18 @@
 
 </head>
 <body>
-<table>
-	<tr><th>Title</th><th>Author(s)</th><th>Copies</th></tr>
-	@{
-		foreach (var book in Model.inventory.Keys)
-		{
-			@:<tr>
-			<td> @book.Title </td>
-			<td> @book.Authors </td>
-			<td> @Model.inventory[book]</td>
-			@:</tr>
+	<table>
+		<tr><th>Title</th><th>Author(s)</th><th>Copies</th></tr>
+		@{
+			foreach (var book in Model.inventory.Keys)
+			{
+				@:<tr>
+					<td> @book.Title </td>
+					<td> @book.Authors </td>
+					<td> @Model.inventory[book]</td>
+				@:</tr>
+			}
 		}
-	}
-</table>
+	</table>
 </body>
 </html>

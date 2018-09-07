@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using Bookish_V2.DataAccessFmwk;
 
-namespace Bookish_V2.ConsoleApp
+namespace Bookish_V2.ConsoleAppFmwk
 {
 	class Program
 	{
-		static void Main(string[] args)
+		static void Main()
 		{
 			PrintInventory();
 		}

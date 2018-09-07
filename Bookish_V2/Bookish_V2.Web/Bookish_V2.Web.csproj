@@ -303,9 +303,9 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Bookish_V2.DataAccess\Bookish_V2.DataAccess.csproj">
-      <Project>{2f9133a5-4ffa-4431-906e-8820e6f03b42}</Project>
-      <Name>Bookish_V2.DataAccess</Name>
+    <ProjectReference Include="..\Bookish_V2.DataAccessFmwk\Bookish_V2.DataAccessFmwk.csproj">
+      <Project>{e06fe986-8863-4136-b9b3-e2e6ca549f58}</Project>
+      <Name>Bookish_V2.DataAccessFmwk</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

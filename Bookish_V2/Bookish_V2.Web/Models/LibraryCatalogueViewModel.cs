@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Bookish_V2.DataAccess;
+using Bookish_V2.DataAccessFmwk;
 
 namespace Bookish_V2.Web.Models
 {

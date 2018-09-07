@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using Bookish_V2.DataAccess;
+using Bookish_V2.DataAccessFmwk;
 using Bookish_V2.Web.Models;
+using System.Data.SqlClient;
+
 
 namespace Bookish_V2.Web.Controllers
 {
@@ -12,6 +14,7 @@ namespace Bookish_V2.Web.Controllers
 	{
 		public ActionResult Index()
 		{
+			var x = new SqlConnection();
 			var db = new BookishConnection();
 			var catalogue = new LibraryCatalogueViewModel
 			{

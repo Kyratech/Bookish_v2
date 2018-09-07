@@ -5,7 +5,7 @@ using System.Configuration;
 using System.Linq;
 using Dapper;
 
-namespace Bookish_V2.DataAccess
+namespace Bookish_V2.DataAccessFmwk
 {
 	public class BookishConnection
 	{
