@@ -33,7 +33,7 @@ namespace Bookish_V2.DataAccess
 
 		public Dictionary<Book, int> GetInventory()
 		{
-			var allItems = GetAllItems();
+			var allItems = this.GetAllItems();
 			var inventory = new Dictionary<Book, int>();
 
 			foreach (var item in allItems)
