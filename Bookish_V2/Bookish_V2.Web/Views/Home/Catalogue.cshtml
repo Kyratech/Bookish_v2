@@ -10,18 +10,42 @@
 
 </head>
 <body>
-<table>
-	<tr><th>Title</th><th>Author(s)</th><th>Copies</th></tr>
-	@{
-		foreach (var book in Model.inventory.Keys)
-		{
-			@:<tr>
-			<td> @book.Title </td>
-			<td> @book.Authors </td>
-			<td> @Model.inventory[book]</td>
-			@:</tr>
-		}
-	}
-</table>
+	<div class="row">
+		<div class="col-md-6">
+			<table>
+				<tr><th>Title</th><th>Author(s)</th><th>Copies</th></tr>
+				@{
+					foreach (var book in Model.inventory.Keys)
+					{
+						@:<tr>
+							<td> @book.Title </td>
+							<td> @book.Authors </td>
+							<td> @Model.inventory[book]</td>
+						@:</tr>
+					}
+				}
+			</table>
+		</div>
+		<div class="col-md-6">
+			@using (Html.BeginForm("Catalogue", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+			{
+				<h2>Search the catalogue</h2>
+				<p>Search by either title or author</p>
+				<hr />
+				<div class="form-group">
+					@Html.LabelFor(m => m.SearchTerm, new { @class = "col-md-2 control-label" })
+					<div class="col-md-10">
+						@Html.TextBoxFor(m => m.SearchTerm, new { @class = "form-control" })
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-offset-2 col-md-10">
+						<input type="submit" value="Search" class="btn btn-default" />
+					</div>
+				</div>
+			}
+		</div>
+	</div>
+
 </body>
 </html>

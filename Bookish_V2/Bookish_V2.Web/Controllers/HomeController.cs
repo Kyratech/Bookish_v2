@@ -25,7 +25,17 @@ namespace Bookish_V2.Web.Controllers
 				inventory = bookishConnection.GetInventory()
 			};
 
-			ViewBag.Message = "Your application description page.";
+			return View("Catalogue", catalogue);
+		}
+
+		[HttpPost]
+		public ActionResult Catalogue(LibraryCatalogueViewModel viewModel)
+		{
+			var bookishConnection = new BookishConnection();
+			var catalogue = new LibraryCatalogueViewModel
+			{
+				inventory = bookishConnection.GetInventory(viewModel.SearchTerm)
+			};
 
 			return View("Catalogue", catalogue);
 		}
