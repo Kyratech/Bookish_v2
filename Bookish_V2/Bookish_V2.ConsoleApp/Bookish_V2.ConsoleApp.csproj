@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Bookish_V2.DataAccess\Bookish_V2.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>
