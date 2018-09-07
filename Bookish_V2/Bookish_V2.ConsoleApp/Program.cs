@@ -8,6 +8,11 @@ namespace Bookish_V2.ConsoleApp
 	{
 		static void Main(string[] args)
 		{
+			PrintAllItems();
+		}
+
+		static void PrintAllBooks()
+		{
 			BookishConnection db = new BookishConnection();
 			List<Book> allBooks = db.GetAllBooks();
 
@@ -16,6 +21,23 @@ namespace Bookish_V2.ConsoleApp
 				Console.WriteLine(new string('*', 20));
 				Console.WriteLine();
 				Console.WriteLine(book.ToString());
+				Console.WriteLine();
+				Console.WriteLine(new string('*', 20));
+			}
+
+			Console.ReadLine();
+		}
+
+		static void PrintAllItems()
+		{
+			BookishConnection db = new BookishConnection();
+			List<Item> allItems = db.GetAllItems();
+
+			foreach (var item in allItems)
+			{
+				Console.WriteLine(new string('*', 20));
+				Console.WriteLine();
+				Console.WriteLine(item.ToString());
 				Console.WriteLine();
 				Console.WriteLine(new string('*', 20));
 			}

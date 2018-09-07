@@ -1,34 +1,38 @@
-CREATE TABLE Users (
-	UserID int NOT NULL,
-	Username varchar(MAX) NOT NULL,
-	Email varchar(MAX) NOT NULL,
-
-	PRIMARY KEY (UserID),
-);
-
 CREATE TABLE Books (
+	BookId int NOT NULL IDENTITY,
 	ISBN varchar(32) NOT NULL,
 	Title varchar(MAX) NOT NULL,
 	Authors varchar(MAX) NOT NULL,
 
-	PRIMARY KEY (ISBN),
+	PRIMARY KEY (BookID),
 );
 
 CREATE TABLE Items (
-	ItemID int NOT NULL,
-	ISBN varchar(32) NOT NULL,
+	ItemId int NOT NULL IDENTITY,
+	BookId int NOT NULL,
 
-	PRIMARY KEY (ItemID),
-	FOREIGN KEY (ISBN) REFERENCES Books(ISBN),
+	PRIMARY KEY (ItemId),
+	FOREIGN KEY (BookId) REFERENCES Books(BookId),
 );
 
 CREATE TABLE BorrowedItems (
-	BorrowID int NOT NULL,
-	UserID int NOT NULL,
-	ItemID int NOT NULL,
+	BorrowId int NOT NULL IDENTITY,
+	UserId nvarchar(128) NOT NULL,
+	ItemId int NOT NULL,
 	DueDate Date NOT NULL,
 
-	PRIMARY KEY (BorrowID),
-	FOREIGN KEY (UserId) REFERENCES Users(UserId),
+	PRIMARY KEY (BorrowId),
+	FOREIGN KEY (UserId) REFERENCES AspNetUsers(Id),
 	FOREIGN KEY (ItemId) REFERENCES Items(ItemId),
 );
+
+INSERT INTO Books (ISBN, Title, Authors)
+VALUES
+('111111', 'Snivy is the best pokemon: A thesis', 'Matthew Langford'),
+('222222', 'All my friends are dead', 'Mr. Stegosaurus'),
+('333333', 'How I learned to stop worrying and love the SQL', 'A. Anderson, B. Banderson'),
+('444444', 'CAKE', 'Mr. Miss');
+
+INSERT INTO Items (BookId)
+VALUES
+(1),(1),(1),(1),(2),(3),(3),(3),(4),(4);
