@@ -8,7 +8,7 @@ namespace Bookish_V2.ConsoleApp
 	{
 		static void Main(string[] args)
 		{
-			PrintAllItems();
+			PrintInventory();
 		}
 
 		static void PrintAllBooks()
@@ -38,6 +38,24 @@ namespace Bookish_V2.ConsoleApp
 				Console.WriteLine(new string('*', 20));
 				Console.WriteLine();
 				Console.WriteLine(item.ToString());
+				Console.WriteLine();
+				Console.WriteLine(new string('*', 20));
+			}
+
+			Console.ReadLine();
+		}
+
+		static void PrintInventory()
+		{
+			BookishConnection db = new BookishConnection();
+			Dictionary<Book, int> inventory = db.GetInventory();
+
+			foreach (var book in inventory.Keys)
+			{
+				Console.WriteLine(new string('*', 20));
+				Console.WriteLine();
+				Console.WriteLine(book.ToString());
+				Console.WriteLine("Copies: " + inventory[book]);
 				Console.WriteLine();
 				Console.WriteLine(new string('*', 20));
 			}

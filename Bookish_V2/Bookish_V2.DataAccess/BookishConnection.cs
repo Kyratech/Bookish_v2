@@ -30,5 +30,25 @@ namespace Bookish_V2.DataAccess
 				splitOn: "BookId").Distinct().ToList();
 			return items;
 		}
+
+		public Dictionary<Book, int> GetInventory()
+		{
+			var allItems = GetAllItems();
+			var inventory = new Dictionary<Book, int>();
+
+			foreach (var item in allItems)
+			{
+				if (inventory.ContainsKey(item.BookDetails))
+				{
+					inventory[item.BookDetails] = inventory[item.BookDetails] + 1;
+				}
+				else
+				{
+					inventory.Add(item.BookDetails, 1);
+				}
+			}
+
+			return inventory;
+		}
 	}
 }
