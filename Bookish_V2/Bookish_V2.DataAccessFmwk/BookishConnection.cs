@@ -56,7 +56,17 @@ namespace Bookish_V2.DataAccessFmwk
 
 		public SortedDictionary<Book, int> GetInventory(string searchTerm)
 		{
-			var allItems = this.GetAllItems(searchTerm);
+			List<Item> allItems;
+			
+			if (string.IsNullOrWhiteSpace(searchTerm))
+			{
+				allItems = this.GetAllItems();
+			}
+			else
+			{
+				allItems = this.GetAllItems(searchTerm);
+			}
+			
 			return GenerateInventoryFromListOfAllItems(allItems);
 		}
 
