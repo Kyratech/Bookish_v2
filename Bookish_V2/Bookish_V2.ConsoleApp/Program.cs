@@ -15,9 +15,7 @@ namespace Bookish_V2.ConsoleApp
 			{
 				Console.WriteLine(new string('*', 20));
 				Console.WriteLine();
-				Console.WriteLine("Book Title: " + book.Title);
-				Console.WriteLine("Authors: " + book.Authors);
-				Console.WriteLine("ISBN: " + book.ISBN);
+				Console.WriteLine(book.ToString());
 				Console.WriteLine();
 				Console.WriteLine(new string('*', 20));
 			}
