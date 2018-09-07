@@ -2,7 +2,7 @@
 
 namespace Bookish_V2.DataAccessFmwk
 {
-    public class Book
+    public class Book: IComparable
     {
 		public int BookId { get; set; }
         public string ISBN { get; set; }
@@ -65,5 +65,11 @@ namespace Bookish_V2.DataAccessFmwk
 			               (!Object.ReferenceEquals(null, BookId) ? BookId.GetHashCode() : 0);
 		    }
 	    }
+
+		public int CompareTo(object obj)
+		{
+			Book other = (Book) obj;
+			return String.Compare(this.Title, other.Title);
+		}
 	}
 }

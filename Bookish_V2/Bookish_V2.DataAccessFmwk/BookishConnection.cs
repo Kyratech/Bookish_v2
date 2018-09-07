@@ -32,10 +32,10 @@ namespace Bookish_V2.DataAccessFmwk
 			return items;
 		}
 
-		public Dictionary<Book, int> GetInventory()
+		public SortedDictionary<Book, int> GetInventory()
 		{
 			var allItems = this.GetAllItems();
-			var inventory = new Dictionary<Book, int>();
+			var inventory = new SortedDictionary<Book, int>();
 
 			foreach (var item in allItems)
 			{

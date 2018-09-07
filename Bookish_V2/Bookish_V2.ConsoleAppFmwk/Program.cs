@@ -48,7 +48,7 @@ namespace Bookish_V2.ConsoleAppFmwk
 		static void PrintInventory()
 		{
 			BookishConnection db = new BookishConnection();
-			Dictionary<Book, int> inventory = db.GetInventory();
+			SortedDictionary<Book, int> inventory = db.GetInventory();
 
 			foreach (var book in inventory.Keys)
 			{
