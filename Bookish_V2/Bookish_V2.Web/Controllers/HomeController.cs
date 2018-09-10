@@ -40,11 +40,18 @@ namespace Bookish_V2.Web.Controllers
 			return View("Catalogue", catalogue);
 		}
 
-		public ActionResult Contact()
+		public ActionResult Book(int bookId)
 		{
-			ViewBag.Message = "Your contact page.";
+			var bookishConnection = new BookishConnection();
+			var bookDetails = bookishConnection.GetBookDetails(bookId);
+			var bookDetailsViewModel = new LibraryItemViewModel()
+			{
+				AvailableCopies = bookDetails.AvailableCopies,
+				TotalCopies = bookDetails.TotalCopies,
+				Book = bookDetails.BookDetails
+			};
 
-			return View();
+			return View(bookDetailsViewModel);
 		}
 	}
 }

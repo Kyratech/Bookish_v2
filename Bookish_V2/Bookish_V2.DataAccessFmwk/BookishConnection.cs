@@ -28,6 +28,43 @@ namespace Bookish_V2.DataAccessFmwk
 			return GetItemsByQuery(sqlString);
 		}
 
+		public SortedDictionary<Book, int> GetInventory()
+		{
+			var allItems = this.GetAllItems();
+			return GenerateInventoryFromListOfAllItems(allItems);
+		}
+
+		public SortedDictionary<Book, int> GetInventory(string searchTerm)
+		{
+			List<Item> allItems;
+
+			if (string.IsNullOrWhiteSpace(searchTerm))
+			{
+				allItems = this.GetAllItems();
+			}
+			else
+			{
+				allItems = this.GetAllItems(searchTerm);
+			}
+
+			return GenerateInventoryFromListOfAllItems(allItems);
+		}
+
+		public CatalogueBookDetails GetBookDetails(int bookId)
+		{
+			string sqlQuery = "SELECT * FROM [Items] INNER JOIN [Books] ON Items.BookId=Books.BookId WHERE Items.BookId='" + bookId + "'";
+			List<Item> bookItems = GetItemsByQuery(sqlQuery);
+
+			CatalogueBookDetails bookDetails = new CatalogueBookDetails()
+			{
+				AvailableCopies = bookItems.Count,
+				TotalCopies = bookItems.Count,
+				BookDetails = bookItems[0].BookDetails
+			};
+
+			return bookDetails;
+		}
+
 		private IDbConnection GetBookishConnection()
 		{
 			return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
@@ -46,28 +83,6 @@ namespace Bookish_V2.DataAccessFmwk
 				},
 				splitOn: "BookId").Distinct().ToList();
 			return items;
-		}
-
-		public SortedDictionary<Book, int> GetInventory()
-		{
-			var allItems = this.GetAllItems();
-			return GenerateInventoryFromListOfAllItems(allItems);
-		}
-
-		public SortedDictionary<Book, int> GetInventory(string searchTerm)
-		{
-			List<Item> allItems;
-			
-			if (string.IsNullOrWhiteSpace(searchTerm))
-			{
-				allItems = this.GetAllItems();
-			}
-			else
-			{
-				allItems = this.GetAllItems(searchTerm);
-			}
-			
-			return GenerateInventoryFromListOfAllItems(allItems);
 		}
 
 		private SortedDictionary<Book, int> GenerateInventoryFromListOfAllItems(List<Item> listOfAllItems)

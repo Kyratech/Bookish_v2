@@ -18,7 +18,7 @@
 					foreach (var book in Model.inventory.Keys)
 					{
 						@:<tr>
-							<td> @book.Title </td>
+							<td> @Html.ActionLink(book.Title, "Book", "Home", new {bookId = book.BookId}, null) </td>
 							<td> @book.Authors </td>
 							<td> @Model.inventory[book]</td>
 						@:</tr>

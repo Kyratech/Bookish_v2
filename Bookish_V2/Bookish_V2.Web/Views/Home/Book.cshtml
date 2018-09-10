@@ -1,0 +1,12 @@
+﻿@using Bookish_V2.Web.Models;
+@using Bookish_V2.DataAccessFmwk;
+@model Bookish_V2.Web.Models.LibraryItemViewModel
+@{
+	ViewBag.Title = Model.Book.Title;
+}
+
+<h2>@Model.Book.Title</h2>
+<h3>@Model.Book.Authors</h3>
+<p>ISBN: @Model.Book.ISBN</p>
+<p>Copies owned by the library: @Model.TotalCopies</p>
+<p>Copies available: @Model.AvailableCopies</p>

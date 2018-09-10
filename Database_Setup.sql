@@ -1,5 +1,5 @@
 CREATE TABLE Books (
-	BookId int NOT NULL IDENTITY,
+	BookId int NOT NULL IDENTITY(1,1),
 	ISBN varchar(32) NOT NULL,
 	Title varchar(MAX) NOT NULL,
 	Authors varchar(MAX) NOT NULL,
@@ -8,7 +8,7 @@ CREATE TABLE Books (
 );
 
 CREATE TABLE Items (
-	ItemId int NOT NULL IDENTITY,
+	ItemId int NOT NULL IDENTITY(1,1),
 	BookId int NOT NULL,
 
 	PRIMARY KEY (ItemId),
@@ -16,7 +16,7 @@ CREATE TABLE Items (
 );
 
 CREATE TABLE BorrowedItems (
-	BorrowId int NOT NULL IDENTITY,
+	BorrowId int NOT NULL IDENTITY(1,1),
 	UserId nvarchar(128) NOT NULL,
 	ItemId int NOT NULL,
 	DueDate Date NOT NULL,
