@@ -18,13 +18,13 @@ namespace Bookish_V2.DataAccessFmwk
 
 		public List<Item> GetAllItems()
 		{
-			var sqlString = "SELECT * FROM [Items] INNER JOIN [Books] ON Items.BookId=Books.BookId";
+			var sqlString = "SELECT * FROM Items INNER JOIN Books ON Items.BookId=Books.BookId";
 			return GetItemsByQuery(sqlString, null);
 		}
 
 		public List<Item> GetAllItems(string searchTerm)
 		{
-			var sqlString = "SELECT * FROM [Items] INNER JOIN [Books] ON Items.BookId=Books.BookId WHERE [Title]=@Search OR [Authors]=@Search";
+			var sqlString = "SELECT * FROM Items INNER JOIN Books ON Items.BookId=Books.BookId WHERE Title LIKE '%' + @Search + '%' OR Authors LIKE '%' + @Search + '%'";
 			return GetItemsByQuery(sqlString, new {Search = searchTerm});
 		}
 
