@@ -15,4 +15,12 @@ namespace Bookish_V2.Web.Models
 	{
 		public List<UserBookDetails> MyBooks { get; set; }
 	}
+
+	public class LibraryItemViewModel
+	{
+		public Book Book { get; set; }
+		public int TotalCopies { get; set; }
+		public int AvailableCopies { get; set; }
+		public List<BorrowDetails> BorrowedItemDetails { get; set; }
+	}
 }
