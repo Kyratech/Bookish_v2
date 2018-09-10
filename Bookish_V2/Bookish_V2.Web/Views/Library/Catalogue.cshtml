@@ -18,7 +18,7 @@
 					foreach (var book in Model.inventory.Keys)
 					{
 						@:<tr>
-							<td> @Html.ActionLink(book.Title, "Book", "Home", new {bookId = book.BookId}, null) </td>
+							<td> @Html.ActionLink(book.Title, "Book", "Library", new {bookId = book.BookId}, null) </td>
 							<td> @book.Authors </td>
 							<td> @Model.inventory[book]</td>
 						@:</tr>
@@ -27,7 +27,7 @@
 			</table>
 		</div>
 		<div class="col-md-6">
-			@using (Html.BeginForm("Catalogue", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+			@using (Html.BeginForm("Catalogue", "Library", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 			{
 				<h2>Search the catalogue</h2>
 				<p>Search by either title or author</p>
