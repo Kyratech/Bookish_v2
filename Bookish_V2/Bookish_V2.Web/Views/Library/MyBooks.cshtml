@@ -13,7 +13,7 @@
 		{
 			@:<tr>
 			<td>@Html.ActionLink(borrowedItem.Title, "Book", "Library", new {bookId = borrowedItem.BookId}, null) </td>
-			<td>@borrowedItem.DueDate</td>
+			<td>@borrowedItem.DueDate.ToShortDateString()</td>
 			@:</tr>
 		}
 	}
