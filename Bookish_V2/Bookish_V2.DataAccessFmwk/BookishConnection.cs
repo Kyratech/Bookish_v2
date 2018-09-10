@@ -19,13 +19,13 @@ namespace Bookish_V2.DataAccessFmwk
 		public List<Item> GetAllItems()
 		{
 			var sqlString = "SELECT * FROM [Items] INNER JOIN [Books] ON Items.BookId=Books.BookId";
-			return GetItemsByQuery(sqlString);
+			return GetItemsByQuery(sqlString, null);
 		}
 
 		public List<Item> GetAllItems(string searchTerm)
 		{
-			var sqlString = "SELECT * FROM [Items] INNER JOIN [Books] ON Items.BookId=Books.BookId WHERE [Title]='" + searchTerm + "' OR [Authors]='" + searchTerm + "'";
-			return GetItemsByQuery(sqlString);
+			var sqlString = "SELECT * FROM [Items] INNER JOIN [Books] ON Items.BookId=Books.BookId WHERE [Title]=@Search OR [Authors]=@Search";
+			return GetItemsByQuery(sqlString, new {Search = searchTerm});
 		}
 
 		public SortedDictionary<Book, int> GetInventory()
@@ -52,14 +52,14 @@ namespace Bookish_V2.DataAccessFmwk
 
 		public CatalogueBookDetails GetBookDetails(int bookId)
 		{
-			var bookItemsSqlQuery = "SELECT * FROM [Items] INNER JOIN [Books] ON Items.BookId=Books.BookId WHERE Items.BookId='" + bookId + "'";
+			var bookItemsSqlQuery = "SELECT * FROM [Items] INNER JOIN [Books] ON Items.BookId=Books.BookId WHERE Items.BookId=@BookID";
 			var borrowedCopiesSqlQuery =
-				"SELECT AspNetUsers.Email, Items.BookId, BorrowedItems.ItemId, BorrowedItems.DueDate FROM [BorrowedItems] INNER JOIN AspNetUsers ON BorrowedItems.UserId=AspNetUsers.Id INNER JOIN Items ON BorrowedItems.ItemId=Items.ItemId WHERE Items.BookId='" + bookId + "'";
+				"SELECT AspNetUsers.Email, Items.BookId, BorrowedItems.ItemId, BorrowedItems.DueDate FROM [BorrowedItems] INNER JOIN AspNetUsers ON BorrowedItems.UserId=AspNetUsers.Id INNER JOIN Items ON BorrowedItems.ItemId=Items.ItemId WHERE Items.BookId=@BookID";
 			
-			var bookItems = GetItemsByQuery(bookItemsSqlQuery);
-			var borrowDetails = GetBorrowDetailsByQuery(borrowedCopiesSqlQuery);
+			var bookItems = GetItemsByQuery(bookItemsSqlQuery, new{BookID = bookId});
+			var borrowDetails = GetBorrowDetailsByQuery(borrowedCopiesSqlQuery, new {BookID = bookId});
 
-			CatalogueBookDetails bookDetails = new CatalogueBookDetails()
+			CatalogueBookDetails bookDetails = new CatalogueBookDetails
 			{
 				AvailableCopies = bookItems.Count - borrowDetails.Count,
 				TotalCopies = bookItems.Count,
@@ -74,10 +74,9 @@ namespace Bookish_V2.DataAccessFmwk
 		{
 			var db = GetBookishConnection();
 			var userBookSqlString =
-				"SELECT Books.*, Items.ItemId, BorrowedItems.DueDate FROM [BorrowedItems] INNER JOIN Items ON BorrowedItems.ItemId=Items.ItemId INNER JOIN Books ON Items.BookId=Books.BookId WHERE BorrowedItems.UserId='" +
-				userId + "'";
+				"SELECT Books.*, Items.ItemId, BorrowedItems.DueDate FROM [BorrowedItems] INNER JOIN Items ON BorrowedItems.ItemId=Items.ItemId INNER JOIN Books ON Items.BookId=Books.BookId WHERE BorrowedItems.UserId=@UserID";
 
-			return db.Query<UserBookDetails>(userBookSqlString).ToList();
+			return db.Query<UserBookDetails>(userBookSqlString, new {UserID = userId}).ToList();
 		}
 
 		private IDbConnection GetBookishConnection()
@@ -85,7 +84,7 @@ namespace Bookish_V2.DataAccessFmwk
 			return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
 		}
 
-		private List<Item> GetItemsByQuery(string sqlString)
+		private List<Item> GetItemsByQuery(string sqlString, object param)
 		{
 			var db = GetBookishConnection();
 
@@ -96,6 +95,7 @@ namespace Bookish_V2.DataAccessFmwk
 					item.BookDetails = book;
 					return item;
 				},
+				param,
 				splitOn: "BookId").Distinct().ToList();
 			return items;
 		}
@@ -119,11 +119,11 @@ namespace Bookish_V2.DataAccessFmwk
 			return inventory;
 		}
 
-		private List<BorrowDetails> GetBorrowDetailsByQuery(string sqlString)
+		private List<BorrowDetails> GetBorrowDetailsByQuery(string sqlString, object param)
 		{
 			var db = GetBookishConnection();
 
-			return db.Query<BorrowDetails>(sqlString).ToList();
+			return db.Query<BorrowDetails>(sqlString, param).ToList();
 		}
 	}
 }
