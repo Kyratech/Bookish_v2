@@ -44,11 +44,12 @@ namespace Bookish_V2.Web.Controllers
 		{
 			var bookishConnection = new BookishConnection();
 			var bookDetails = bookishConnection.GetBookDetails(bookId);
-			var bookDetailsViewModel = new LibraryItemViewModel()
+			var bookDetailsViewModel = new LibraryItemViewModel
 			{
 				AvailableCopies = bookDetails.AvailableCopies,
 				TotalCopies = bookDetails.TotalCopies,
-				Book = bookDetails.BookDetails
+				Book = bookDetails.BookDetails,
+				BorrowedItemDetails = bookDetails.BorrowedItemDetails
 			};
 
 			return View(bookDetailsViewModel);

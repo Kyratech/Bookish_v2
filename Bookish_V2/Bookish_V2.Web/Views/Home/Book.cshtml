@@ -10,3 +10,16 @@
 <p>ISBN: @Model.Book.ISBN</p>
 <p>Copies owned by the library: @Model.TotalCopies</p>
 <p>Copies available: @Model.AvailableCopies</p>
+<p>Copies on loan:</p>
+<table>
+	<tr><th>On loan to</th><th>Due date</th></tr>
+	@{
+		foreach (var item in Model.BorrowedItemDetails)
+		{
+			@:<tr>
+			<td> @item.Email </td>
+			<td> @item.DueDate </td>
+			@:</tr>
+		}
+	}
+</table>
