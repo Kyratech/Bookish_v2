@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Book.cs" />
     <Compile Include="BookishConnection.cs" />
+    <Compile Include="BorrowDetails.cs" />
     <Compile Include="CatalogueBookDetails.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
