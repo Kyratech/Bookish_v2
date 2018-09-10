@@ -70,6 +70,16 @@ namespace Bookish_V2.DataAccessFmwk
 			return bookDetails;
 		}
 
+		public List<UserBookDetails> GetUsersBooks(string userId)
+		{
+			var db = GetBookishConnection();
+			var userBookSqlString =
+				"SELECT Books.*, Items.ItemId, BorrowedItems.DueDate FROM [BorrowedItems] INNER JOIN Items ON BorrowedItems.ItemId=Items.ItemId INNER JOIN Books ON Items.BookId=Books.BookId WHERE BorrowedItems.UserId='" +
+				userId + "'";
+
+			return db.Query<UserBookDetails>(userBookSqlString).ToList();
+		}
+
 		private IDbConnection GetBookishConnection()
 		{
 			return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);

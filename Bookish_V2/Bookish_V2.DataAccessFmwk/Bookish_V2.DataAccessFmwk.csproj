@@ -51,6 +51,7 @@
     <Compile Include="CatalogueBookDetails.cs" />
     <Compile Include="Item.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UserBookDetails.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

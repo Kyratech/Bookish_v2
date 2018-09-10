@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Bookish_V2.DataAccessFmwk;
 using Bookish_V2.Web.Models;
+using Microsoft.AspNet.Identity;
 
 namespace Bookish_V2.Web.Controllers
 {
@@ -9,7 +10,7 @@ namespace Bookish_V2.Web.Controllers
 		public ActionResult Catalogue()
 	    {
 		    var bookishConnection = new BookishConnection();
-		    var catalogue = new LibraryCatalogueViewModel
+		    var catalogue = new LibraryCatalogueViewModel()
 		    {
 			    inventory = bookishConnection.GetInventory()
 		    };
@@ -21,7 +22,7 @@ namespace Bookish_V2.Web.Controllers
 	    public ActionResult Catalogue(LibraryCatalogueViewModel viewModel)
 	    {
 		    var bookishConnection = new BookishConnection();
-		    var catalogue = new LibraryCatalogueViewModel
+		    var catalogue = new LibraryCatalogueViewModel()
 		    {
 			    inventory = bookishConnection.GetInventory(viewModel.SearchTerm)
 		    };
@@ -42,6 +43,20 @@ namespace Bookish_V2.Web.Controllers
 		    };
 
 		    return View(bookDetailsViewModel);
+	    }
+
+	    public ActionResult MyBooks()
+	    {
+			var bookishConnection = new BookishConnection();
+		    var myId = User.Identity.GetUserId();
+
+		    var userBooks = bookishConnection.GetUsersBooks(myId);
+		    var userBooksModel = new UserCatalogueViewModel
+		    {
+			    MyBooks = userBooks
+		    };
+
+		    return View("MyBooks", userBooksModel);
 	    }
 	}
 }

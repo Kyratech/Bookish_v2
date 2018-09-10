@@ -1,0 +1,21 @@
+﻿@using Bookish_V2.Web.Models;
+@using Bookish_V2.DataAccessFmwk;
+@model Bookish_V2.Web.Models.UserCatalogueViewModel
+@{
+	ViewBag.Title = "MyBooks";
+}
+
+<h2>MyBooks</h2>
+<table>
+	<tr><th>Title</th><th>Due On</th></tr>
+	@{
+		foreach (var borrowedItem in Model.MyBooks)
+		{
+			@:<tr>
+			<td>@Html.ActionLink(borrowedItem.Title, "Book", "Library", new {bookId = borrowedItem.BookId}, null) </td>
+			<td>@borrowedItem.DueDate</td>
+			@:</tr>
+		}
+	}
+</table>
+

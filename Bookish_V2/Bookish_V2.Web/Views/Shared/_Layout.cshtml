@@ -25,6 +25,7 @@
 					@if (Request.IsAuthenticated)
 					{
 						<li>@Html.ActionLink("Catalogue", "Catalogue", "Library")</li>
+						<li>@Html.ActionLink("MyBooks", "MyBooks", "Library")</li>
 					}
 				</ul>
 				@Html.Partial("_LoginPartial")
