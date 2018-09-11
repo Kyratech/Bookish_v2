@@ -97,5 +97,16 @@ namespace Bookish_V2.Web.Controllers
 
 		    return RedirectToAction("Book", new { bookId });
 	    }
+
+	    [HttpPost]
+	    [ValidateAntiForgeryToken]
+	    public ActionResult ReturnBook(int itemId)
+	    {
+		    var bookishConnection = new BookishConnection();
+
+		    var success = bookishConnection.returnBook(itemId);
+
+		    return RedirectToAction("MyBooks");
+	    }
 	}
 }

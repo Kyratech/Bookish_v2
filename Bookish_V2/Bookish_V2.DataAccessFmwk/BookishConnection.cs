@@ -102,6 +102,16 @@ namespace Bookish_V2.DataAccessFmwk
 			return TakeOutItem(chosenItemId, userId, db);
 		}
 
+		public bool returnBook(int itemId)
+		{
+			var db = GetBookishConnection();
+
+			var returnItemSqlString = "DELETE FROM BorrowedItems WHERE ItemId = @id";
+			var rowsAffected = db.Execute(returnItemSqlString, new {id = itemId});
+
+			return rowsAffected != 0;
+		}
+
 		private IDbConnection GetBookishConnection()
 		{
 			return new SqlConnection(ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString);
