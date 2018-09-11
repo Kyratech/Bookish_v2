@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using Bookish_V2.DataAccessFmwk;
 
 namespace Bookish_V2.Web.Models
@@ -37,10 +38,9 @@ namespace Bookish_V2.Web.Models
 
 		[Required]
 		[Display(Name = "ISBN")]
-		[RegularExpression("^(97(8|9))?\\d{9}(\\d|X)$")]
+		[RegularExpression("^(97(8|9))?\\d{9}(\\d|X)$", ErrorMessage = "This is not a valid 10 or 13 digit ISBN number. Please check and enter it again.")]
 		public string Isbn { get; set; }
 
-		[Required]
 		[Display(Name = "Number of copies")]
 		public int Copies { get; set; }
 	}

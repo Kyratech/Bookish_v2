@@ -67,7 +67,7 @@ namespace Bookish_V2.Web.Controllers
 
 		[HttpPost]
 		[ValidateAntiForgeryToken]
-	    public ActionResult AddBook(NewBookViewModel model, int copies)
+	    public ActionResult AddBook(NewBookViewModel model)
 	    {
 		    if (!ModelState.IsValid)
 		    {
