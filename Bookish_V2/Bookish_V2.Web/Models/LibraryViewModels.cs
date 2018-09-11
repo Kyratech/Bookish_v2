@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using Bookish_V2.DataAccessFmwk;
 
 namespace Bookish_V2.Web.Models
@@ -22,5 +23,25 @@ namespace Bookish_V2.Web.Models
 		public int TotalCopies { get; set; }
 		public int AvailableCopies { get; set; }
 		public List<BorrowDetails> BorrowedItemDetails { get; set; }
+	}
+
+	public class NewBookViewModel
+	{
+		[Required]
+		[Display(Name = "Title")]
+		public string Title { get; set; }
+
+		[Required]
+		[Display(Name = "Author(s)")]
+		public string Authors { get; set; }
+
+		[Required]
+		[Display(Name = "ISBN")]
+		[RegularExpression("^(97(8|9))?\\d{9}(\\d|X)$")]
+		public string Isbn { get; set; }
+
+		[Required]
+		[Display(Name = "Number of copies")]
+		public int Copies { get; set; }
 	}
 }

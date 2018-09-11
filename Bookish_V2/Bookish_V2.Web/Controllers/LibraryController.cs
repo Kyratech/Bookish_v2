@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Web.Mvc;
 using Bookish_V2.DataAccessFmwk;
 using Bookish_V2.Web.Models;
 using Microsoft.AspNet.Identity;
@@ -57,6 +58,33 @@ namespace Bookish_V2.Web.Controllers
 		    };
 
 		    return View("MyBooks", userBooksModel);
+	    }
+
+	    public ActionResult AddBook()
+	    {
+		    return View();
+	    }
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+	    public ActionResult AddBook(NewBookViewModel model, int copies)
+	    {
+		    if (!ModelState.IsValid)
+		    {
+			    return View(model);
+		    }
+
+		    var bookishConnection = new BookishConnection();
+		    try
+		    {
+			    bookishConnection.SubmitNewBook(new Book {Title = model.Title, Authors = model.Authors, ISBN = model.Isbn}, model.Copies);
+			    return RedirectToAction("Index", "Home");
+		    }
+		    catch (Exception e)
+		    {
+				ModelState.AddModelError("", "Failed to add book: " + e.Message);
+			    return View(model);
+		    }
 	    }
 	}
 }
