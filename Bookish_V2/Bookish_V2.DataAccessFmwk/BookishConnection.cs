@@ -97,20 +97,9 @@ namespace Bookish_V2.DataAccessFmwk
 		{
 			var db = GetBookishConnection();
 
-			var bookByIdSqlString = "SELECT Items.ItemId FROM Items LEFT JOIN BorrowedItems ON Items.ItemId = BorrowedItems.ItemId WHERE (BorrowedItems.ItemId IS NULL) AND (Items.BookId = @id);";
-			var chosenItemId = db.QueryFirst<int>(bookByIdSqlString, new {id = bookId});
+			var chosenItemId = GetAvailableItemId(bookId, db);
 
-			var addBorrowedItemSqlString =
-				"INSERT INTO BorrowedItems (UserId, ItemId, DueDate) VALUES (@user, @item, @date);";
-			var dueDate = DateTime.Today.AddDays(7);
-			var rowsUpdated = db.Execute(addBorrowedItemSqlString, new
-			{
-				user = userId,
-				item = chosenItemId,
-				date = dueDate
-			});
-
-			return rowsUpdated != 0;
+			return TakeOutItem(chosenItemId, userId, db);
 		}
 
 		private IDbConnection GetBookishConnection()
@@ -217,6 +206,28 @@ namespace Bookish_V2.DataAccessFmwk
 		{
 			var getBookByIsbnSqlString = "SELECT BookId FROM Books WHERE Isbn=@isbn;";
 			return db.QuerySingle<int>(getBookByIsbnSqlString, new { isbn = new DbString { Value = bookDetails.ISBN, IsFixedLength  = true, Length = 13, IsAnsi = true}});
+		}
+
+		private int GetAvailableItemId(int bookId, IDbConnection db)
+		{
+			var bookByIdSqlString = "SELECT Items.ItemId FROM Items LEFT JOIN BorrowedItems ON Items.ItemId = BorrowedItems.ItemId WHERE (BorrowedItems.ItemId IS NULL) AND (Items.BookId = @id);";
+			return db.QueryFirst<int>(bookByIdSqlString, new { id = bookId });
+		}
+
+		private bool TakeOutItem(int itemId, string userId, IDbConnection db)
+		{
+			var addBorrowedItemSqlString =
+				"INSERT INTO BorrowedItems (UserId, ItemId, DueDate) VALUES (@user, @item, @date);";
+			var dueDate = DateTime.Today.AddDays(7);
+			
+			var rowsUpdated = db.Execute(addBorrowedItemSqlString, new
+			{
+				user = userId,
+				item = itemId,
+				date = dueDate
+			});
+
+			return rowsUpdated != 0;
 		}
 	}
 }
