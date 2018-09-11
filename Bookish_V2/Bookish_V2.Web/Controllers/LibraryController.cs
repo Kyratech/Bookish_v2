@@ -91,6 +91,10 @@ namespace Bookish_V2.Web.Controllers
 		[ValidateAntiForgeryToken]
 	    public ActionResult TakeOut(int bookId)
 	    {
+			var bookishConnection = new BookishConnection();
+
+		    var success = bookishConnection.TakeOutBook(bookId, User.Identity.GetUserId());
+
 		    return RedirectToAction("Book", new { bookId });
 	    }
 	}

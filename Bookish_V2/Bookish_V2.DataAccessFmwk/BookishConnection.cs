@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Configuration;
 using System.Linq;
+using System.Net.Sockets;
 using Dapper;
 
 namespace Bookish_V2.DataAccessFmwk
@@ -90,6 +91,26 @@ namespace Bookish_V2.DataAccessFmwk
 			}
 
 			AddBookItems(bookDetails, copies, db);
+		}
+
+		public bool TakeOutBook(int bookId, string userId)
+		{
+			var db = GetBookishConnection();
+
+			var bookByIdSqlString = "SELECT Items.ItemId FROM Items LEFT JOIN BorrowedItems ON Items.ItemId = BorrowedItems.ItemId WHERE (BorrowedItems.ItemId IS NULL) AND (Items.BookId = @id);";
+			var chosenItemId = db.QueryFirst<int>(bookByIdSqlString, new {id = bookId});
+
+			var addBorrowedItemSqlString =
+				"INSERT INTO BorrowedItems (UserId, ItemId, DueDate) VALUES (@user, @item, @date);";
+			var dueDate = DateTime.Today.AddDays(7);
+			var rowsUpdated = db.Execute(addBorrowedItemSqlString, new
+			{
+				user = userId,
+				item = chosenItemId,
+				date = dueDate
+			});
+
+			return rowsUpdated != 0;
 		}
 
 		private IDbConnection GetBookishConnection()
