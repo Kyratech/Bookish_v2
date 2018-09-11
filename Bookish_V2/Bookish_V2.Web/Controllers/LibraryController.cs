@@ -86,5 +86,12 @@ namespace Bookish_V2.Web.Controllers
 			    return View(model);
 		    }
 	    }
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+	    public ActionResult TakeOut(int bookId)
+	    {
+		    return RedirectToAction("Book", new { bookId });
+	    }
 	}
 }

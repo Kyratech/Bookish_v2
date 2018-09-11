@@ -10,6 +10,20 @@
 <p>ISBN: @Model.Book.ISBN</p>
 <p>Copies owned by the library: @Model.TotalCopies</p>
 <p>Copies available: @Model.AvailableCopies</p>
+@{
+	if (Model.AvailableCopies > 0)
+	{
+		using (Html.BeginForm("TakeOut", "Library", new {BookId = Model.Book.BookId}, FormMethod.Post, null))
+		{
+			@Html.AntiForgeryToken()
+			<div class="form-group">
+				<div class="col-md-offset-2 col-md-10">
+					<input type="submit" value="Take out a copy" class="btn btn-default" />
+				</div>
+			</div>
+		}
+	}
+}
 <p>Copies on loan:</p>
 <table>
 	<tr><th>On loan to</th><th>Due date</th></tr>
@@ -17,8 +31,8 @@
 		foreach (var item in Model.BorrowedItemDetails)
 		{
 			@:<tr>
-			<td> @item.Email </td>
-			<td> @item.DueDate.ToShortDateString() </td>
+				<td> @item.Email </td>
+				<td> @item.DueDate.ToShortDateString() </td>
 			@:</tr>
 		}
 	}
